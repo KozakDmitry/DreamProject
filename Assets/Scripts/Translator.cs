@@ -4,10 +4,12 @@ using UnityEngine;
 
 using System;
 using System.IO;
+using System.Text;
+
 
 public static class Translator
 {
-    private static string fileName = "Languages";
+    private static string fileName = "Languages.csv";
     private static string path = Application.dataPath +"/Localization/" + fileName;
     private static string choosedLanguage;
     private static string phrase;
@@ -18,15 +20,15 @@ public static class Translator
         English
     }
 
-    public static void SelectStartLanguage()
+    public static string SelectStartLanguage()
     {
         if (PlayerPrefs.HasKey("Language"))
         {
             choosedLanguage = LoadLanguage();
         }
-        
+        return choosedLanguage;
     }
-    public static int ReturnLanguage()
+    private static int ReturnLanguage()
     {
         switch(choosedLanguage)
         {
@@ -44,7 +46,7 @@ public static class Translator
 
         return data[ReturnLanguage()]; 
     }
-    public static string LoadLanguage()
+    private static string LoadLanguage()
     {
         
         return Enum.IsDefined(typeof(Languages), PlayerPrefs.GetString("Language")) ? PlayerPrefs.GetString("Language") : Application.systemLanguage.ToString();
@@ -56,8 +58,8 @@ public static class Translator
     }
 
 
-    private static void ReadCSVFile()
+    public static void ReadCSVFile()
     {
-        phrases = File.ReadAllLines(path);
+        phrases = File.ReadAllLines(path, Encoding.UTF8);
     }
 }
