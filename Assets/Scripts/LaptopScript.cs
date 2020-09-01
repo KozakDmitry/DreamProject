@@ -5,8 +5,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LaptopScript : MonoBehaviour, IPointerDownHandler
+public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable
 {
+
+    private Camera cam;
     private static string nameProg = "Notepad";
     private DateTime time;
     private int countClicks = 0;
@@ -14,16 +16,25 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler
     private GameObject notepad;
     [SerializeField]
     private GameObject offScreen;
+    [SerializeField]
+    private GameObject player;
     private InputField inpFl;
 
     // Start is called before the first frame update
     void Start()
     {
+        cam = GetComponentInParent<Camera>();
         inpFl = GetComponentInChildren<InputField>();
         string txt = "";
         txt = PlayerPrefs.GetString("Notepad");
         txt = txt.Replace("", "/n");
         inpFl.text = txt;
+    }
+    public void Interact()
+    {
+        cam.gameObject.SetActive(true);
+        player.GetComponentInChildren<Camera>().gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
     }
         
     public void SaveNotepad()
@@ -39,13 +50,10 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler
         
     public void EnterNotepad()
     {
-        Debug.Log("Seconds");
         notepad.SetActive(true);
     }
     public void ExitNotepad()
     {
-        Debug.Log("No seconds");
-
         notepad.SetActive(false);
     }
     public void ExitLaptop()
@@ -53,7 +61,9 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler
         Debug.Log("Seconds");
         offScreen.SetActive(true);
         notepad.SetActive(false);
-        Cursor.lockState = CursorLockMode.None;
+        cam.gameObject.SetActive(false);
+        player.GetComponentInChildren<Camera>().gameObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
     }
     // Update is called once per frame
     void Update()
