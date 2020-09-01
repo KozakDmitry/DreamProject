@@ -17,5 +17,5 @@ public class TranslateObj : MonoBehaviour
     {
         text.text = textMessage;
     }
-
+    
 }
