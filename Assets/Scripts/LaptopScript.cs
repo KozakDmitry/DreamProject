@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable
+public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISaveable
 {
 
     private Camera cam;
@@ -20,6 +20,10 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable
     private GameObject player;
     private InputField inpFl;
 
+    //void Awake()
+    //{
+    //    SaveLoad.SaveAll += LaptopScript.Save;
+    //}
     // Start is called before the first frame update
     void Start()
     {
@@ -32,11 +36,29 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable
     }
     public void Interact()
     {
-        cam.gameObject.SetActive(true);
-        player.GetComponentInChildren<Camera>().gameObject.SetActive(false);
-        Cursor.lockState = CursorLockMode.None;
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            cam.gameObject.SetActive(true);
+            player.GetComponentInChildren<Camera>().gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
+    public int InInteract()
+    {
+        return 0;
+    }
+    public void Save()
+    {
         
+    }
+    public void Load()
+    {
+        
+    }
+    public void OutInteract()
+    {
+       
+    }
     public void SaveNotepad()
     {
         string text = "";
@@ -58,7 +80,6 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable
     }
     public void ExitLaptop()
     {
-        Debug.Log("Seconds");
         offScreen.SetActive(true);
         notepad.SetActive(false);
         cam.gameObject.SetActive(false);

@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    private void Update()
+    {
+      
+    }
     public void SaveGame()
     {
         Debug.Log("Saved");
