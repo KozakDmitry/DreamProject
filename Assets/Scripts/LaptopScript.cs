@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleJSON;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,13 +21,14 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
     private GameObject player;
     private InputField inpFl;
 
-    //void Awake()
-    //{
-    //    SaveLoad.SaveAll += LaptopScript.Save;
-    //}
-    // Start is called before the first frame update
+    void Awake()
+    {
+        SaveLoad.SubscribeSV(this.gameObject);
+    }
+
     void Start()
     {
+
         cam = GetComponentInParent<Camera>();
         inpFl = GetComponentInChildren<InputField>();
         string txt = "";
@@ -49,11 +51,14 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
     }
     public void Save()
     {
-        
+        JSONArray saveData = new JSONArray();
+        saveData.Add("Interact", 0);
+        SaveLoad.saveFile.Add("Laptop", saveData);
     }
     public void Load()
     {
-        
+        JSONArray saveData = new JSONArray();
+        saveData.Add(SaveLoad.saveFile["Laptop"].AsArray);
     }
     public void OutInteract()
     {

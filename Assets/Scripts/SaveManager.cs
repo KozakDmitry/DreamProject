@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    JSONObject Savefile = new JSONObject();
+    
     // Start is called before the first frame update
     void Start()
     {
