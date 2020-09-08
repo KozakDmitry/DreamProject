@@ -3,22 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class TVManager : MonoBehaviour
+public class TVManager : MonoBehaviour,IInteractable,ISaveable
 {
     private VideoPlayer vp;
-    public void PlayTV()
-    {
-        vp.Play();
-    }
-    public void StopTV()
-    {
-    
-        vp.Stop();
-    }
     // Start is called before the first frame update
     void Start()
     {
         vp = GetComponentInParent<VideoPlayer>();
+        SaveLoad.SubscribeSV(this.gameObject);
+    }
+    public void Interact()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (vp.isActiveAndEnabled)
+            {
+                vp.Stop();
+            }
+            else
+            {
+                vp.Play();
+            }
+        }
+    }
+    public void Save()
+    {
+
+    }
+
+    public void Load()
+    {
+
+    }
+
+    public int InInteract()
+    {
+        return 0;
     }
 
     // Update is called once per frame

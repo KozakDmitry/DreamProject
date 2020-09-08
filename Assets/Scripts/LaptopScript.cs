@@ -60,10 +60,7 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
         JSONArray saveData = new JSONArray();
         saveData.Add(SaveLoad.saveFile["Laptop"].AsArray);
     }
-    public void OutInteract()
-    {
-       
-    }
+ 
     public void SaveNotepad()
     {
         string text = "";

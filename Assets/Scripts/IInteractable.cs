@@ -6,5 +6,4 @@ public interface IInteractable
 {
    void Interact();
     int InInteract();
-    void OutInteract();
 }
