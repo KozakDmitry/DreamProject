@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DayNightChange : MonoBehaviour
+public class DayNightChangeManager : MonoBehaviour
 {
     [Range(0, 1)]
     public float timeOfDay = 0f;

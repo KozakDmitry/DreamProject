@@ -33,9 +33,10 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
         inpFl = GetComponentInChildren<InputField>();
         string txt = "";
         txt = PlayerPrefs.GetString("Notepad");
-        txt = txt.Replace("", "/n");
+        if (txt != null)
+            txt = txt.Replace("", "/n");
         inpFl.text = txt;
-    }
+    }   
     public void Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))

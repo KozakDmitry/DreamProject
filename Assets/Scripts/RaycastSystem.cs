@@ -10,18 +10,21 @@ public class RaycastSystem : MonoBehaviour
 
     [SerializeField]
     private Transform menuAdvices;
+
+    private MouseLook ml;
     
     RaycastHit hit;
     Camera cam;
-    int layerMask = 1 << LayerMask.NameToLayer("Interactable");
+    int layerMask;
     public float rayLenght = 100f;
     GameObject gm;
     IInteractable iI;
     // Start is called before the first frame update
     void Start()
     {
+        ml = GetComponent<MouseLook>();
         cam = GetComponentInChildren<Camera>();
-            
+        layerMask = 1 << LayerMask.NameToLayer("Interactable");
     }
 
     // Update is called once per frame
@@ -30,9 +33,20 @@ public class RaycastSystem : MonoBehaviour
           if (Input.GetKeyDown(KeyCode.Escape))
         {
            menu.SetActive(!menu.activeSelf);
+            if (menu.activeSelf)
+            {
+                ml.enabled = false;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                ml.enabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLenght, layerMask))
         {
+            Debug.Log("HIT");
             iI = hit.collider.gameObject.GetComponent<IInteractable>();
             menuAdvices.GetChild(iI.InInteract()).gameObject.SetActive(true);
             //iI.InInteract();
