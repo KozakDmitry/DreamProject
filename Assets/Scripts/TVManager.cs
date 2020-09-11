@@ -9,14 +9,14 @@ public class TVManager : MonoBehaviour,IInteractable,ISaveable
     // Start is called before the first frame update
     void Start()
     {
-        vp = GetComponentInParent<VideoPlayer>();
+        vp = GetComponentInChildren<VideoPlayer>();
         SaveLoad.SubscribeSV(this.gameObject);
     }
     public void Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (vp.isActiveAndEnabled)
+            if (vp.isPlaying)
             {
                 vp.Stop();
             }

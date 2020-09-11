@@ -46,7 +46,7 @@ public class RaycastSystem : MonoBehaviour
         }
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLenght, layerMask))
         {
-            Debug.Log("HIT");
+            //Debug.Log(hit.collider.gameObject.name);
             iI = hit.collider.gameObject.GetComponent<IInteractable>();
             menuAdvices.GetChild(iI.InInteract()).gameObject.SetActive(true);
             //iI.InInteract();

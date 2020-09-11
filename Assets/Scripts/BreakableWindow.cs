@@ -50,6 +50,7 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
     
     private bool allreadyCalculated = false;
     private GameObject splinterParent;
+    private AudioSource aS;
     int[] tris;
 
     public int InInteract()
@@ -76,6 +77,7 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
         }
         else
         {
+            am.SetTrigger("Close");
             isOpened = false;
         }
     }
@@ -98,7 +100,8 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
     }
     void Start()
     {
-        
+        aS = GetComponent<AudioSource>();
+        aS.volume = 0;
         am = GetComponent<Animator>();
         if (preCalculate == true && allreadyCalculated == false)
         {

@@ -29,7 +29,6 @@ Transform:
   m_Children:
   - {fileID: 4074382475781971741}
   - {fileID: 4077251791403051453}
-  - {fileID: 4072842962225522037}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -572,8 +571,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f296f2966e4df547bc49c9db2d7d9a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 4072842962225522036}
   notepad: {fileID: 4072842961439193758}
   offScreen: {fileID: 4072842961688311136}
+  player: {fileID: 0}
 --- !u!1 &4072842961439193758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,12 +1366,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4072842962225522038}
-  m_LocalRotation: {x: -0, y: -0.9914449, z: 0.13052626, w: 0}
-  m_LocalPosition: {x: 0, y: 0.144, z: 0.031}
+  m_LocalRotation: {x: -0, y: -0.99144465, z: 0.1305281, w: 0}
+  m_LocalPosition: {x: 0, y: 0.13836218, z: 0.12689142}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4957743263058180838}
-  m_RootOrder: 2
+  m_Father: {fileID: 4077251791403051453}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 165, y: 0, z: 180}
 --- !u!20 &4072842962225522036
 Camera:
@@ -1660,6 +1661,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4072842961925278364}
+  - {fileID: 4072842962225522037}
   m_Father: {fileID: 4957743263058180838}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

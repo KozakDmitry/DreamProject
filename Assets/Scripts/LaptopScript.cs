@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISaveable
 {
-
+    [SerializeField]
     private Camera cam;
     private static string nameProg = "Notepad";
     private DateTime time;
@@ -29,7 +29,7 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
     void Start()
     {
 
-        cam = GetComponentInParent<Camera>();
+        //cam = GetComponentInParent<Camera>();
         inpFl = GetComponentInChildren<InputField>();
         string txt = "";
         txt = PlayerPrefs.GetString("Notepad");
@@ -43,6 +43,8 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
         {
             cam.gameObject.SetActive(true);
             player.GetComponentInChildren<Camera>().gameObject.SetActive(false);
+            //player.GetComponentInChildren<Camera>().GetComponent<RaycastSystem>().enabled = false;
+            offScreen.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
         }
     }
