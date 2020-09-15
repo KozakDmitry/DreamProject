@@ -2272,6 +2272,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall2
       objectReference: {fileID: 0}
+    - target: {fileID: 7853537996612785784, guid: d072bea6af833124c8d09c4de6c8057d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7853537996612785787, guid: d072bea6af833124c8d09c4de6c8057d,
         type: 3}
       propertyPath: m_LocalRotation.x
