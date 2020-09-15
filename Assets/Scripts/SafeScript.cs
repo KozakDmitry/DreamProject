@@ -12,21 +12,31 @@ public class SafeScript : MonoBehaviour,IInteractable,ISaveable
     Animator am;
     [SerializeField]
     private GameObject player;
+    [SerializeField]
     private Camera cam;
     private void Start()
     {
         SaveLoad.SubscribeSV(this.gameObject);
         am = GetComponent<Animator>();
-        cam = player.GetComponentInChildren<Camera>();
+        //cam = player.GetComponentInChildren<Camera>();
     }
-    public void Interact()
+    public bool Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             cam.gameObject.SetActive(true);
             player.GetComponentInChildren<Camera>().gameObject.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
+            return true;
         }
+        return false;
+    }
+
+    public void OutInteract()
+    {
+        cam.gameObject.SetActive(false);
+        player.GetComponentInChildren<Camera>().gameObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
     }
     public int InInteract()
     {

@@ -57,7 +57,7 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
     {
         return 1;
     }
-    public void Interact()
+    public bool Interact()
     {
         if (Input.GetKeyDown(KeyCode.E)&& !isBroken)
         {
@@ -67,18 +67,25 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
         {
             breakWindow();
         }
+        return false;
+    }
+    public void OutInteract()
+    {
+
     }
     public void OpenWindow()
     {
         if (isOpened==false)
         {
             am.SetTrigger("Open");
-            isOpened = true; 
+            isOpened = true;
+            aS.mute = false;
         }
         else
         {
             am.SetTrigger("Close");
             isOpened = false;
+            aS.mute = true;
         }
     }
     public void Save()
@@ -101,7 +108,7 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
     void Start()
     {
         aS = GetComponent<AudioSource>();
-        aS.volume = 0;
+        aS.mute = true;
         am = GetComponent<Animator>();
         if (preCalculate == true && allreadyCalculated == false)
         {
@@ -274,7 +281,7 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
             Destroy(GetComponent<Collider>());
             Destroy(GetComponent<MeshRenderer>());
             Destroy(GetComponent<MeshFilter>());
-
+            aS.mute = false;
             isBroken = true;
             isOpened = true;
         }

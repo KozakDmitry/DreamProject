@@ -12,7 +12,7 @@ public class TVManager : MonoBehaviour,IInteractable,ISaveable
         vp = GetComponentInChildren<VideoPlayer>();
         SaveLoad.SubscribeSV(this.gameObject);
     }
-    public void Interact()
+    public bool Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -25,6 +25,11 @@ public class TVManager : MonoBehaviour,IInteractable,ISaveable
                 vp.Play();
             }
         }
+        return false;
+    }
+    public void OutInteract()
+    {
+
     }
     public void Save()
     {

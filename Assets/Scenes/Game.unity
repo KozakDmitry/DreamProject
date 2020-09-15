@@ -1070,6 +1070,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1367457962}
+    - target: {fileID: 879251106687461747, guid: efed6be6476dee745987c8ccfd9c1600,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 2136451947}
     - target: {fileID: 1677055602412541467, guid: efed6be6476dee745987c8ccfd9c1600,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1423,6 +1428,11 @@ PrefabInstance:
     - target: {fileID: 7943131976919051309, guid: efed6be6476dee745987c8ccfd9c1600,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980716205612032026, guid: efed6be6476dee745987c8ccfd9c1600,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8147809276753719620, guid: efed6be6476dee745987c8ccfd9c1600,
@@ -1925,8 +1935,8 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
-  Mute: 0
+  Loop: 1
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -2435,12 +2445,12 @@ PrefabInstance:
     - target: {fileID: 3569466592640963526, guid: 1f4191ced1b402d43a4c057e13fec22a,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3569971417960501906, guid: 1f4191ced1b402d43a4c057e13fec22a,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3990169471470993061, guid: 1f4191ced1b402d43a4c057e13fec22a,
         type: 3}
@@ -2632,6 +2642,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4072842961705154121, guid: c668d42142ead584a874a15d5d09fd28,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OutInteract
+      objectReference: {fileID: 0}
     - target: {fileID: 4072842961705154123, guid: c668d42142ead584a874a15d5d09fd28,
         type: 3}
       propertyPath: m_Layer
@@ -2749,3 +2764,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c668d42142ead584a874a15d5d09fd28, type: 3}
+--- !u!20 &2136451947 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4987886370385986871, guid: efed6be6476dee745987c8ccfd9c1600,
+    type: 3}
+  m_PrefabInstance: {fileID: 661989403}
+  m_PrefabAsset: {fileID: 0}

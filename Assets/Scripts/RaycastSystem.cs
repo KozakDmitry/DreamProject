@@ -12,7 +12,7 @@ public class RaycastSystem : MonoBehaviour
     private Transform menuAdvices;
 
     private MouseLook ml;
-    
+    private bool interacting = false;
     RaycastHit hit;
     Camera cam;
     int layerMask;
@@ -26,39 +26,66 @@ public class RaycastSystem : MonoBehaviour
         cam = GetComponentInChildren<Camera>();
         layerMask = 1 << LayerMask.NameToLayer("Interactable");
     }
+    void ChangeMenu()
+    {
+        menu.SetActive(!menu.activeSelf);
+        if (menu.activeSelf)
+        {
+            ml.enabled = false;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            ml.enabled = true;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
           if (Input.GetKeyDown(KeyCode.Escape))
         {
-           menu.SetActive(!menu.activeSelf);
-            if (menu.activeSelf)
+            ChangeMenu();
+        }
+        if (!interacting)
+        {
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLenght, layerMask))
             {
-                ml.enabled = false;
-                Cursor.lockState = CursorLockMode.None;
+                
+                iI = hit.collider.gameObject.GetComponent<IInteractable>();
+                menuAdvices.GetChild(iI.InInteract()).gameObject.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.F))
+                {
+                    interacting = iI.Interact();
+                    menuAdvices.GetChild(iI.InInteract()).gameObject.SetActive(!interacting);
+                }
             }
             else
             {
-                ml.enabled = true;
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
-        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLenght, layerMask))
-        {
-            //Debug.Log(hit.collider.gameObject.name);
-            iI = hit.collider.gameObject.GetComponent<IInteractable>();
-            menuAdvices.GetChild(iI.InInteract()).gameObject.SetActive(true);
-            //iI.InInteract();
-            if (Input.GetKeyDown(KeyCode.E)||Input.GetKeyDown(KeyCode.F))
-            {
-                iI.Interact();
+                if (iI != null)
+                {
+                    menuAdvices.GetChild(iI.InInteract()).gameObject.SetActive(false);
+                }
             }
         }
         else
-            if (iI!=null)
         {
-            menuAdvices.GetChild(iI.InInteract()).gameObject.SetActive(false);
+            if (iI != null)
+            {
+                menuAdvices.GetChild(iI.InInteract()).gameObject.SetActive(false);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Debug.Log("Pressed");
+                if (iI != null)
+                {
+                    
+                    iI.OutInteract();
+                    interacting = false;
+                }
+            }
         }
     }
 }

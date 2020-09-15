@@ -37,16 +37,27 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
             txt = txt.Replace("", "/n");
         inpFl.text = txt;
     }   
-    public void Interact()
+    public void OutInteract()
+    {
+        offScreen.SetActive(true);
+        notepad.SetActive(false);
+        cam.gameObject.SetActive(false);
+        player.GetComponentInChildren<Camera>(true).gameObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    public bool Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             cam.gameObject.SetActive(true);
-            player.GetComponentInChildren<Camera>().gameObject.SetActive(false);
+            player.GetComponentInChildren<Camera>(true).gameObject.SetActive(false);
             //player.GetComponentInChildren<Camera>().GetComponent<RaycastSystem>().enabled = false;
             offScreen.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
+            return true;
         }
+        else
+            return false;
     }
     public int InInteract()
     {
@@ -83,14 +94,7 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
     {
         notepad.SetActive(false);
     }
-    public void ExitLaptop()
-    {
-        offScreen.SetActive(true);
-        notepad.SetActive(false);
-        cam.gameObject.SetActive(false);
-        player.GetComponentInChildren<Camera>().gameObject.SetActive(true);
-        Cursor.lockState = CursorLockMode.Locked;
-    }
+
     // Update is called once per frame
     void Update()
     {
