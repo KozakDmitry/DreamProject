@@ -19,7 +19,9 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
     private GameObject offScreen;
     [SerializeField]
     private GameObject player;
+    [SerializeField]
     private InputField inpFl;
+    bool Interacting = false;
 
     void Awake()
     {
@@ -29,12 +31,8 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
     void Start()
     {
 
-        //cam = GetComponentInParent<Camera>();
-        inpFl = GetComponentInChildren<InputField>();
-        string txt = "";
+        string txt = string.Empty;
         txt = PlayerPrefs.GetString("Notepad");
-        if (txt != null)
-            txt = txt.Replace("", "/n");
         inpFl.text = txt;
     }   
     public void OutInteract()
@@ -59,14 +57,14 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
         else
             return false;
     }
-    public int InInteract()
+    public AdviceTypes InInteract()
     {
-        return 0;
+        return AdviceTypes.Usial;
     }
     public void Save()
     {
         JSONArray saveData = new JSONArray();
-        saveData.Add("Interact", 0);
+        saveData.Add("Interact", Interacting);
         SaveLoad.saveFile.Add("Laptop", saveData);
     }
     public void Load()
@@ -74,11 +72,14 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
         JSONArray saveData = new JSONArray();
         saveData.Add(SaveLoad.saveFile["Laptop"].AsArray);
     }
- 
+    public void Check()
+    {
+
+    }
     public void SaveNotepad()
     {
-        string text = "";
-        string toSave = "";
+        string text = string.Empty;
+        string toSave = string.Empty;
         text = inpFl.text;
         toSave = text.Replace("/n", " ");
         PlayerPrefs.SetString("Notepad", toSave);

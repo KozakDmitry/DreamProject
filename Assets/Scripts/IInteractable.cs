@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IInteractable
 {
     bool Interact();
-    int InInteract();
+    AdviceTypes InInteract();
     void OutInteract();
+
 }

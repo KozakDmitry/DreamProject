@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class TVManager : MonoBehaviour,IInteractable,ISaveable
+public class TVManager : MonoBehaviour,IInteractable
 {
     private VideoPlayer vp;
     // Start is called before the first frame update
     void Start()
     {
         vp = GetComponentInChildren<VideoPlayer>();
-        SaveLoad.SubscribeSV(this.gameObject);
     }
     public bool Interact()
     {
@@ -41,9 +40,10 @@ public class TVManager : MonoBehaviour,IInteractable,ISaveable
 
     }
 
-    public int InInteract()
+
+    public AdviceTypes InInteract()
     {
-        return 0;
+        return AdviceTypes.Usial;
     }
 
     // Update is called once per frame

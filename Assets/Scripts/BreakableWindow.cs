@@ -1,6 +1,7 @@
 ﻿using SimpleJSON;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
@@ -50,12 +51,13 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
     
     private bool allreadyCalculated = false;
     private GameObject splinterParent;
+    [SerializeField]
     private AudioSource aS;
     int[] tris;
 
-    public int InInteract()
+    public AdviceTypes InInteract()
     {
-        return 1;
+        return AdviceTypes.Window;
     }
     public bool Interact()
     {
@@ -91,13 +93,21 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
     public void Save()
     {
         JSONArray save = new JSONArray();  
-        save.Add("IsOpened", isOpened);
+        save.Add("isOpened", isOpened);
         save.Add("isBroken", isBroken);
 
         SaveLoad.saveFile.Add("Window", save);
     }
 
     public void Load()
+    {
+        JSONArray save = new JSONArray();
+        save.Add(SaveLoad.saveFile["Window"].AsArray);
+        isOpened = save["isOpened"];
+        isBroken = save["isBroken"];
+        Check();
+    }
+    public void Check()
     {
 
     }
@@ -107,7 +117,7 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
     }
     void Start()
     {
-        aS = GetComponent<AudioSource>();
+       // aS = GetComponent<AudioSource>();
         aS.mute = true;
         am = GetComponent<Animator>();
         if (preCalculate == true && allreadyCalculated == false)

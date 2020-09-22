@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface ISaveable
 {
-
+    void Check();
     void Save();
     void Load();
 }
