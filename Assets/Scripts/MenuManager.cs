@@ -5,18 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    private void Start()
+    {
+        if (SaveLoad.continieGame)
+            SaveLoad.LoadAllData();
+    }
+
     private void Update()
     {
       
     }
     public void SaveGame()
     {
-        Debug.Log("Saved");
+        SaveLoad.SaveAllData();     
     }
 
     public void ExitToMenu()
     {
         SceneManager.LoadScene("Menu");
-        Debug.Log("Exit");
+        SaveLoad.DeleteSub();
     }
 }

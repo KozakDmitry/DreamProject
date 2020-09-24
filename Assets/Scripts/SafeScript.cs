@@ -11,16 +11,20 @@ public class SafeScript : MonoBehaviour,IInteractable,ISaveable
     [SerializeField]
     private int codeValue;
     private bool isLocked = true;
+    [SerializeField]
     Animator am;
     [SerializeField]
     private GameObject player;
     [SerializeField]
     private Camera cam;
-    private void Start()
+
+    private enum safeTrigger {Open,Close, OpenedSafe };
+    private void Awake()
     {
         SaveLoad.SubscribeSV(this.gameObject);
-        am = GetComponent<Animator>();
-        //cam = player.GetComponentInChildren<Camera>();
+    }
+    private void Start()
+    {
     }
     public bool Interact()
     {
@@ -28,6 +32,7 @@ public class SafeScript : MonoBehaviour,IInteractable,ISaveable
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                Cursor.visible = true;
                 cam.gameObject.SetActive(true);
                 player.GetComponentInChildren<Camera>().gameObject.SetActive(false);
                 Cursor.lockState = CursorLockMode.None;
@@ -36,7 +41,7 @@ public class SafeScript : MonoBehaviour,IInteractable,ISaveable
         }
         else
         {
-            am.SetTrigger("Close");
+            am.SetTrigger(safeTrigger.Close.ToString());
             isLocked = true;
         }
         return false;
@@ -47,6 +52,7 @@ public class SafeScript : MonoBehaviour,IInteractable,ISaveable
         cam.gameObject.SetActive(false);
         player.GetComponentInChildren<Camera>(true).gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public AdviceTypes InInteract()
@@ -56,18 +62,22 @@ public class SafeScript : MonoBehaviour,IInteractable,ISaveable
 
     public void Save()
     {
-        JSONArray save = new JSONArray();
+        JSONObject save = new JSONObject();
         save.Add("codeValue", codeValue);
         save.Add("isLocked",isLocked);
         save.Add("textInput", textInput.text);
         SaveLoad.saveFile.Add("Safe", save);
     }
 
-
+    private void OnDestroy()
+    {
+        SaveLoad.SaveAll -= Save;
+        SaveLoad.LoadAll -= Load;
+    }
     public void Load()
     {
-        JSONArray saveData = new JSONArray();
-        saveData.Add(SaveLoad.saveFile["Safe"].AsArray);
+        JSONObject saveData = new JSONObject();
+        saveData.Add(SaveLoad.saveFile["Safe"]);
         codeValue = saveData["codeValue"];
         isLocked = saveData["isLocked"];
         textInput.text = saveData["textInput"];
@@ -78,7 +88,7 @@ public class SafeScript : MonoBehaviour,IInteractable,ISaveable
     {
         if (!isLocked)
         {
-            am.SetTrigger("Open");
+            am.SetTrigger(safeTrigger.OpenedSafe.ToString());
         }
     }
     public void AddNum(int num)
@@ -97,7 +107,7 @@ public class SafeScript : MonoBehaviour,IInteractable,ISaveable
     {
         if (int.Parse(textInput.text) == codeValue)
         {
-            am.SetTrigger("Open");
+            am.SetTrigger(safeTrigger.Open.ToString());
             isLocked = false;
             textInput.text = string.Empty;
             OutInteract();

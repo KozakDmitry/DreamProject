@@ -15,8 +15,7 @@ public class RaycastSystem : MonoBehaviour
     RaycastHit hit;
     Camera cam;
     int layerMask;
-    public float rayLenght = 100f;
-    GameObject gm;
+    public float rayLenght = 5f;
     IInteractable iI;
     // Start is called before the first frame update
     void Start()
@@ -61,9 +60,10 @@ public class RaycastSystem : MonoBehaviour
         }
         else
         {
+            adviceM.DisableAll();
             if (iI != null)
             {
-                adviceM.DisableAll();
+                
                 interacting = false;
             }
         }

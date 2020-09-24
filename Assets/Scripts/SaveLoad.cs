@@ -13,30 +13,46 @@ public static class SaveLoad
     private static string saveFileName = "/Saves.json";
     private static string pathFile = Application.persistentDataPath+ saveFileName;
     public static JSONObject saveFile = new JSONObject();
-
+    public static bool continieGame = false;
     public static void SubscribeSV(GameObject gm)
     {
         ISaveable isave = gm.GetComponent<ISaveable>();
         SaveAll += isave.Save;
         LoadAll += isave.Load;  
+
     }
-    private static void OpenFile()
+    public static void DeleteSub()
     {
-        
+
     }
-    static void SaveAllData()
+    public static bool CheckSave()
+    {
+        if (File.Exists(pathFile))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public static void SaveAllData()
     {
         SaveAll();
         File.WriteAllText(pathFile, saveFile.ToString());
     }
 
-    static void LoadAllData()
+    public static void LoadAllData()
     {
         string JsonFile = File.ReadAllText(pathFile);
         saveFile = (JSONObject)JSON.Parse(JsonFile);
         LoadAll();
-        
     }
-
+    public static void ResetAllProgress()
+    {
+        File.Delete(pathFile);
+        PlayerPrefs.DeleteAll();
+        //File.WriteAllText(pathFile, string.Empty);
+    }
 
 }

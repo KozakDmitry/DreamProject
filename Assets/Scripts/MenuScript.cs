@@ -14,11 +14,13 @@ public class MenuScript : MonoBehaviour
         {
             ml.enabled = false;
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
             ml.enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
     // Start is called before the first frame update
@@ -33,6 +35,7 @@ public class MenuScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ChangeMenu();
+            
         }
     }
 }

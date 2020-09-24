@@ -32,7 +32,14 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
     {
 
         string txt = string.Empty;
-        txt = PlayerPrefs.GetString("Notepad");
+        if (SaveLoad.continieGame)
+        {
+            txt = PlayerPrefs.GetString("Notepad");
+        }
+        else
+        {
+            txt = "Code Is 4562";
+        }
         inpFl.text = txt;
     }   
     public void OutInteract()
@@ -42,11 +49,13 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
         cam.gameObject.SetActive(false);
         player.GetComponentInChildren<Camera>(true).gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     public bool Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Cursor.visible = true;
             cam.gameObject.SetActive(true);
             player.GetComponentInChildren<Camera>(true).gameObject.SetActive(false);
             //player.GetComponentInChildren<Camera>().GetComponent<RaycastSystem>().enabled = false;
@@ -57,19 +66,24 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
         else
             return false;
     }
+    private void OnDestroy()
+    {
+        SaveLoad.SaveAll -= Save;
+        SaveLoad.LoadAll -= Load;
+    }
     public AdviceTypes InInteract()
     {
         return AdviceTypes.Usial;
     }
     public void Save()
     {
-        JSONArray saveData = new JSONArray();
+        JSONObject saveData = new JSONObject();
         saveData.Add("Interact", Interacting);
         SaveLoad.saveFile.Add("Laptop", saveData);
     }
     public void Load()
     {
-        JSONArray saveData = new JSONArray();
+        JSONObject saveData = new JSONObject();
         saveData.Add(SaveLoad.saveFile["Laptop"].AsArray);
     }
     public void Check()

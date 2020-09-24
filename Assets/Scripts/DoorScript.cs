@@ -7,35 +7,39 @@ public class DoorScript : MonoBehaviour,ISaveable,IInteractable
 {
     enum DoorVariables { Finish,IsOpen};
     Animator[] animators;
-    private bool Finish= false;
+    private bool Finish= true;
     private bool isOpen = false;
-    // Start is called before the first frame update
-    void Start()
+    private enum doorTriggers {TryToOpen,Open,Close};
+    private void Awake()
     {
         SaveLoad.SubscribeSV(this.gameObject);
-        animators = GetComponentsInChildren<Animator>();
-        //foreach(Animator an in animators)
-        //{
-        //    Debug.Log(an.name);
-        //}
     }
+    void Start()
+    {
 
+        animators = GetComponentsInChildren<Animator>();
+
+    }
+    private void OnDestroy()
+    {
+        SaveLoad.SaveAll -= Save;
+        SaveLoad.LoadAll -= Load;
+    }
     public void Save()
     {
-        JSONArray save = new JSONArray();
+        JSONObject save = new JSONObject();
         save.Add("Finish", Finish);
         save.Add("isOpen", isOpen);
-
-        SaveLoad.saveFile.Add("Window", save);
+        SaveLoad.saveFile.Add("Door", save);
     }
 
     public void Load()
     {
-        JSONArray saveData = new JSONArray();
-        saveData.Add(SaveLoad.saveFile["Window"].AsArray);
+        JSONObject saveData = new JSONObject();
+        saveData.Add(SaveLoad.saveFile["Door"]);
+        Debug.Log(saveData);
         Finish = saveData["Finish"];
         isOpen = saveData["isOpen"];
-        //saveData["Finish"] != null ? Finish = saveData["Finish"] : Finish = false;
         Check();
     }
     public void Check()
@@ -47,18 +51,18 @@ public class DoorScript : MonoBehaviour,ISaveable,IInteractable
     }
     private void Open()
     {
-        animators[1].SetTrigger("TryToOpen");
+        animators[1].SetTrigger(doorTriggers.TryToOpen.ToString());
         if (Finish)
         {
             if (!isOpen)
             {
-                animators[0].SetTrigger("Open");
+                animators[0].SetTrigger(doorTriggers.Open.ToString());
             }
             else
             {
-                animators[0].SetTrigger("Close");
+                animators[0].SetTrigger(doorTriggers.Close.ToString());
             }
-
+            isOpen = !isOpen;
         }
     }
     public AdviceTypes InInteract()
@@ -69,7 +73,7 @@ public class DoorScript : MonoBehaviour,ISaveable,IInteractable
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            
+            Open();
         }
         return false;
     }
@@ -77,7 +81,6 @@ public class DoorScript : MonoBehaviour,ISaveable,IInteractable
     {
 
     }
-    // Update is called once per frame
     void Update()
     {
         

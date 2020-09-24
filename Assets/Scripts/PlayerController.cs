@@ -8,14 +8,19 @@ public class PlayerController : MonoBehaviour,ISaveable
     
     private CharacterController cc;
     public float moveSpeed = 10f;
-    private void Start()
+    private void Awake()
     {
         SaveLoad.SubscribeSV(this.gameObject);
+    }
+    private void Start()
+    {
+        Cursor.visible = false;
+        
         cc = GetComponent<CharacterController>();
     }
     public void Save() 
     {
-        JSONArray save = new JSONArray();
+        JSONObject save = new JSONObject();
         JSONArray position = new JSONArray();
         position.Add(transform.position.x);
         position.Add(transform.position.y);
@@ -25,13 +30,18 @@ public class PlayerController : MonoBehaviour,ISaveable
     }
     public void Load()
     {
-        JSONArray save = new JSONArray();
-        save.Add(SaveLoad.saveFile["Player"].AsArray);
+        JSONObject save = new JSONObject();
+        save.Add(SaveLoad.saveFile["Player"]);
         transform.position = new Vector3(
             save["position"].AsArray[0],
             save["position"].AsArray[1],
             save["position"].AsArray[2]
             );
+    }
+    private void OnDestroy()
+    {
+        SaveLoad.SaveAll -= Save;
+        SaveLoad.LoadAll -= Load;
     }
     public void Check() 
     {

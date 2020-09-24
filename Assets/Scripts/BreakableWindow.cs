@@ -47,6 +47,7 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
     public List<GameObject> splinters;
     private Vector3[] vertices;
     private Vector3[] normals;
+    [SerializeField]
     private Animator am;
     
     private bool allreadyCalculated = false;
@@ -54,11 +55,19 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
     [SerializeField]
     private AudioSource aS;
     int[] tris;
+    private enum windowTriggers {Open,Close,OpenedWindow };
 
+
+    private void Awake()
+    {
+        SaveLoad.SubscribeSV(this.gameObject);
+    }
     public AdviceTypes InInteract()
     {
         return AdviceTypes.Window;
     }
+
+
     public bool Interact()
     {
         if (Input.GetKeyDown(KeyCode.E)&& !isBroken)
@@ -79,47 +88,61 @@ public class BreakableWindow : MonoBehaviour,ISaveable,IInteractable {
     {
         if (isOpened==false)
         {
-            am.SetTrigger("Open");
+            am.SetTrigger(windowTriggers.Open.ToString());
             isOpened = true;
             aS.mute = false;
         }
         else
         {
-            am.SetTrigger("Close");
+            am.SetTrigger(windowTriggers.Close.ToString());
             isOpened = false;
             aS.mute = true;
         }
     }
     public void Save()
     {
-        JSONArray save = new JSONArray();  
+        JSONObject save = new JSONObject();
         save.Add("isOpened", isOpened);
         save.Add("isBroken", isBroken);
-
+    
         SaveLoad.saveFile.Add("Window", save);
     }
 
     public void Load()
     {
-        JSONArray save = new JSONArray();
-        save.Add(SaveLoad.saveFile["Window"].AsArray);
+       
+        JSONObject save = new JSONObject();
+        save.Add(SaveLoad.saveFile["Window"]);
+        Debug.Log(save);
         isOpened = save["isOpened"];
         isBroken = save["isBroken"];
         Check();
     }
+    private void OnDestroy()
+    {
+        SaveLoad.SaveAll -= Save;
+        SaveLoad.LoadAll -= Load;
+    }
     public void Check()
     {
-
+        Debug.Log(isOpened);
+        if (isBroken)
+        {
+            
+            breakWindow();
+        }
+        else if (isOpened)
+        {
+            Debug.Log("TRy");
+            OpenWindow();
+        }
     }
-    private void Awake()
-    {
-        SaveLoad.SubscribeSV(this.gameObject);
-    }
+   
     void Start()
     {
-       // aS = GetComponent<AudioSource>();
+        
         aS.mute = true;
-        am = GetComponent<Animator>();
+
         if (preCalculate == true && allreadyCalculated == false)
         {
             bakeVertices();
