@@ -56,7 +56,10 @@ public static class Translator
     {
         choosedLanguage = choose;
     }
+    public static void ChangeLanguage(int choose)
+    {
 
+    }
 
     public static void ReadCSVFile()
     {

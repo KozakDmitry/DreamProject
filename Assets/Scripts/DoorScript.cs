@@ -2,9 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
+using UnityEngine.Timeline;
 
 public class DoorScript : MonoBehaviour,ISaveable,IInteractable
 {
+
+    [SerializeField]
+    private AudioSource aS;
+    [SerializeField]
+    private AudioClip knock;
+    [SerializeField]
+    private AudioClip open;
     enum DoorVariables { Finish,IsOpen};
     Animator[] animators;
     private bool Finish= true;
@@ -49,11 +57,17 @@ public class DoorScript : MonoBehaviour,ISaveable,IInteractable
             Open();
         }
     }
+    private void SoundPlay(AudioClip clip)
+    {
+        aS.clip = clip;
+        aS.Play();
+    }
     private void Open()
     {
         animators[1].SetTrigger(doorTriggers.TryToOpen.ToString());
         if (Finish)
         {
+            SoundPlay(open);
             if (!isOpen)
             {
                 animators[0].SetTrigger(doorTriggers.Open.ToString());
@@ -62,7 +76,12 @@ public class DoorScript : MonoBehaviour,ISaveable,IInteractable
             {
                 animators[0].SetTrigger(doorTriggers.Close.ToString());
             }
+            
             isOpen = !isOpen;
+        }
+        else
+        {
+            SoundPlay(knock);
         }
     }
     public AdviceTypes InInteract()
@@ -80,9 +99,5 @@ public class DoorScript : MonoBehaviour,ISaveable,IInteractable
     public void OutInteract()
     {
 
-    }
-    void Update()
-    {
-        
     }
 }

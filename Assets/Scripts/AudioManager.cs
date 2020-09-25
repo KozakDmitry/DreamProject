@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource audio;
+    [SerializeField]
+    private AudioSource audio;
     void Start()
     {
         if (!PlayerPrefs.HasKey("volume"))

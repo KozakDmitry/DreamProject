@@ -9,6 +9,11 @@ public class ButtonManager : MonoBehaviour
     [SerializeField]
     private GameObject continieButton;
     private bool isActive = false;
+    [SerializeField]
+    private Dropdown dropdown;
+    [SerializeField]
+    private TranslateManager tM;
+   
     private void CheckContinie()
     {
         continieButton.SetActive(SaveLoad.CheckSave());
@@ -16,6 +21,7 @@ public class ButtonManager : MonoBehaviour
     private void Start()
     {
         CheckContinie();
+        dropdown.onValueChanged.AddListener(delegate { ChangeLanguage(dropdown); });
     }
     public void Coop()
     {
@@ -28,7 +34,14 @@ public class ButtonManager : MonoBehaviour
         SceneManager.LoadScene("Game");
         SaveLoad.continieGame = true;
     }
-
+    public void ChangeLanguage(Dropdown dropdown)
+    {
+        int lang = dropdown.value;
+        Debug.Log(dropdown.options[lang].text);
+        Translator.ChangeLanguage(dropdown.options[lang].text);
+        PlayerPrefs.SetString("Language", dropdown.options[lang].text);
+        tM.ChangeLan();
+    }
     public void NewGame()
     {
         SceneManager.LoadScene("Game");

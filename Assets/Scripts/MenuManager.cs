@@ -10,11 +10,6 @@ public class MenuManager : MonoBehaviour
         if (SaveLoad.continieGame)
             SaveLoad.LoadAllData();
     }
-
-    private void Update()
-    {
-      
-    }
     public void SaveGame()
     {
         SaveLoad.SaveAllData();     
@@ -23,6 +18,5 @@ public class MenuManager : MonoBehaviour
     public void ExitToMenu()
     {
         SceneManager.LoadScene("Menu");
-        SaveLoad.DeleteSub();
     }
 }

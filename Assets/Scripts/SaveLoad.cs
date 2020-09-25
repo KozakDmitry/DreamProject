@@ -21,10 +21,6 @@ public static class SaveLoad
         LoadAll += isave.Load;  
 
     }
-    public static void DeleteSub()
-    {
-
-    }
     public static bool CheckSave()
     {
         if (File.Exists(pathFile))
@@ -52,7 +48,6 @@ public static class SaveLoad
     {
         File.Delete(pathFile);
         PlayerPrefs.DeleteAll();
-        //File.WriteAllText(pathFile, string.Empty);
     }
 
 }

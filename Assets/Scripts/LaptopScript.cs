@@ -58,7 +58,6 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
             Cursor.visible = true;
             cam.gameObject.SetActive(true);
             player.GetComponentInChildren<Camera>(true).gameObject.SetActive(false);
-            //player.GetComponentInChildren<Camera>().GetComponent<RaycastSystem>().enabled = false;
             offScreen.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
             return true;
@@ -118,7 +117,6 @@ public class LaptopScript : MonoBehaviour, IPointerDownHandler,IInteractable,ISa
     
     public void OnPointerDown(PointerEventData eventData)
     {
-        //eventData.pointerCurrentRaycast.gameObject.tag
         if (eventData.pointerCurrentRaycast.gameObject.name == nameProg)
         {
 

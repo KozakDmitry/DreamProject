@@ -97,7 +97,7 @@ public class SafeScript : MonoBehaviour,IInteractable,ISaveable
     }
     public void RemoveNum()
     {
-        textInput.text.Remove(textInput.text.Length);
+       textInput.text =  textInput.text.Substring(0, textInput.text.Length - 1);
     }
     public void RemoveAll()
     {

@@ -6,7 +6,6 @@ using UnityEngine.Video;
 public class TVManager : MonoBehaviour,IInteractable
 {
     private VideoPlayer vp;
-    // Start is called before the first frame update
     void Start()
     {
         vp = GetComponentInChildren<VideoPlayer>();
@@ -30,25 +29,9 @@ public class TVManager : MonoBehaviour,IInteractable
     {
 
     }
-    public void Save()
-    {
-
-    }
-
-    public void Load()
-    {
-
-    }
-
-
     public AdviceTypes InInteract()
     {
         return AdviceTypes.Usial;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
