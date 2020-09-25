@@ -36,7 +36,6 @@ public class RaycastSystem : MonoBehaviour
             if (iI != null)
             {
                 adviceM.SetActive(iI.InInteract(), true);
-
                 if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.F))
                 {
                     interacting = iI.Interact();

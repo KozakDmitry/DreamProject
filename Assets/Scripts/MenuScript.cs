@@ -27,6 +27,7 @@ public class MenuScript : MonoBehaviour
     void Start()
     {
         ml = GetComponent<MouseLook>();
+
     }
 
     void Update()
